@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { of, debounceTime, from, map, mergeMap, mergeWith, Observable, ObservableInput, pluck, merge, pipe } from 'rxjs';
+import { of, flatMap, from, map, mergeMap, mergeWith, Observable, ObservableInput, pluck, merge, pipe } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { fromEvent, distinct, take, scheduled } from 'rxjs';
 
@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
         } else {
           return of('0');
         }
-      })
+      }),
+        mergeMap(v => v)
       );
 
     const obs2$ = ajax.getJSON<Person[]>("/data/persons.json")
@@ -48,22 +49,22 @@ export class AppComponent implements OnInit {
         } else {
           return of('0');
         }
-
-      }));
-
+      }),
+        mergeMap(v => v)
+      );
 
     const obs$ = merge(obs1$, obs2$);
     const obs01$ = obs$.pipe(distinct());
     const getResults = (amount: number) =>
       obs01$.pipe(take(amount));
 
-    getResults(5).subscribe(value => value.subscribe(
+    getResults(5).subscribe(
       {
-        next: value1 => console.log("Received value", value1),
+        next: value => console.log("Received value", value),
         error: err => console.error(err),
         complete: () => console.log("All values retrieved!")
       }
-    ));
+    );
 
   }
   title = 'RxJs Example';

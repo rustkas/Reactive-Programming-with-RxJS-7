@@ -13,7 +13,7 @@ import { Observable, Observer } from 'rxjs';
 })
 export class AppComponent implements OnInit {
 
-	title = 'RxJs Example';
+  title = 'RxJs Example';
 
   ngOnInit(): void {
     const button = document.getElementById("retrieveDataBtn");

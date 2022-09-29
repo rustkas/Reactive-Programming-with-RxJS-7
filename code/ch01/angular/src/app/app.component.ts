@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { of, flatMap, from, map, mergeMap, mergeWith, Observable, ObservableInput, pluck, merge, pipe } from 'rxjs';
+import { from, map, mergeMap, merge, pipe } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { fromEvent, distinct, take, scheduled } from 'rxjs';
+
 
 interface ZipCode {
   zipcode: string;

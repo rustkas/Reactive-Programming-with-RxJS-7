@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { interval, map, merge, range, take, reduce, scan, Observable, Subscription } from 'rxjs';
+import { fromEvent, interval, map, merge, range, take, reduce, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +42,17 @@ export class AppComponent implements OnInit {
         console.log('-------------------------------');
       }
     });
-    
+
+        // Stop streams
+
+        const stopSteamsBtn = document.getElementById('stopStreams');
+        if (stopSteamsBtn) {
+          const stop_stream$ = fromEvent(stopSteamsBtn, 'click');
+          const stop_stream_subscription = stop_stream$.subscribe(_element => {
+            stop_stream_subscription.unsubscribe();
+            console.clear();
+          });
+        }
 
   }// nfOnInir
 
